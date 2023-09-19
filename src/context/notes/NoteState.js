@@ -2,21 +2,7 @@
 import { useState } from "react";
 import noteContext from "./noteContext";
 const NoteState=(props)=>{
-    // const state1={
-    //     "Name":"Riya Kumari",
-    //     "Class":"B-Tech 3rd year"
-    // }
-    // const [state, setState]=useState(state1);
-//     const update=()=>{
-// setTimeout(()=>{
-//     setState({
-// "Name":"Priya Kumari",
-// "Class":"12A"
-//     })
-// },1000);
-//     }
-
-// We will bring notes using our API but for now we are hardcoding it..
+  
 const notesInitial=[
     {
       "_id": "64fa1e3c2cbd760b32eb842a",
@@ -38,10 +24,34 @@ const notesInitial=[
     }
   ]
   const [notes,setNotes]=useState(notesInitial);
+
+  // Add a Note
+const addNote=(title, description, tag)=>{
+// TODO: API Call
+console.log("Adding a new note")
+const note= {
+  "_id": "64fb3e7e9d879fb7e6828ffe",
+  "user": "64f5e6f9b5d6725249ac64fa",
+  "title": title,
+  "description":description,
+  "tag":tag,
+  "timestamp": "2023-09-08T15:32:14.127Z",
+  "__v": 0
+};
+setNotes(notes.concat(note))
+// we can also use setNotes(notes.push(note))  --It will not add but submit our solution.
+}
+  // Delete a Note
+const deleteNote=()=>{
+  
+}
+  // Edit a Note
+  const editNote=()=>{
+  
+  }
+
     return (
-        //    <noteContext.Provider value={state1}>
-        //  <noteContext.Provider value={{state,update}}>
-         <noteContext.Provider value={{notes,setNotes}}>
+         <noteContext.Provider value={{notes,addNote,deleteNote,editNote}}>
 {props.children}
 </noteContext.Provider>
     )
