@@ -1,9 +1,10 @@
 const express = require('express');
 const connectToMongo = require('./db'); // Use the correct path
-
+var cors = require('cors')
 const app = express();
 const port = 5000;
 
+app.use(cors())
 connectToMongo();
 
 app.use(express.json())

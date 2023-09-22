@@ -4,7 +4,7 @@ import noteContext from '../context/notes/noteContext';
 const Noteitems = (props) => {
   const context=useContext(noteContext);
   const {deleteNote}=context;
-    const {notes}=props;
+    const {notes,updateNote}=props;
   return (
     <div className='col-md-3'>
       <div className="card my-3">
@@ -16,7 +16,9 @@ const Noteitems = (props) => {
         <i className="far fa-trash-alt mx-1" onClick={()=>{
           deleteNote(notes._id)
         }}></i>
-        <i className="far fa-edit mx-1"></i>
+        <i className="far fa-edit mx-1" onClick={()=>{
+          updateNote(notes)
+        }}></i>
     </div>
 </div>
 
