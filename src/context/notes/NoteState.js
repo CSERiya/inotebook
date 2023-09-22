@@ -32,7 +32,10 @@ const response= await fetch(`${host}/api/notes/addnote`, {
   },
   body:JSON.stringify({title, description,tag})
 });
-console.log("Adding a new note")
+
+const json=await response.json();
+console.log(json);
+
 const note= {
   "_id": "64fb3e7e9d879fb7e6828ffs",
   "user": "64f5e6f9b5d6725249ac64fa",
@@ -54,13 +57,12 @@ const deleteNote=async(id)=>{
     'auth-token':"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRmNWU2ZjliNWQ2NzI1MjQ5YWM2NGZhIn0sImlhdCI6MTY5Mzk4MTg0OX0.2VMA5CfzNJcqv-u3pqUzKl9Bt9JoBwL-fmmgYdhNevA"
   }
 });
-const json= response.json();
+const json= await response.json();
 console.log(json);
-  console.log("Deleting the note with id= " +id);
   const newNotes=notes.filter((note)=>{return note._id!==id})
   setNotes(newNotes)
 }
-  // Edit a Note
+  // Edit a Note or Update a note
   const editNote=async (id,title,description,tag)=>{ 
     // API Call
 const response= await fetch(`${host}/api/notes//updatenote/${id}`, {
@@ -71,16 +73,20 @@ const response= await fetch(`${host}/api/notes//updatenote/${id}`, {
   },
   body:JSON.stringify({title,description,tag})
 });
-const json= response.json();
+const json= await response.json();
+console.log(json);
+let newNote=JSON.parse(JSON.stringify(notes))
     // Logic added to edit in client
-    for (let index = 0; index < notes.length; index++) {
-      const element = notes[index];
+    for (let index = 0; index < newNote.length; index++) {
+      const element = newNote[index];
       if(element._id===id){
-        element.title=title;
-        element.description=description;
-        element.tag=tag;
+        newNote[index].title=title;
+        newNote[index].description=description;
+        newNote[index].tag=tag;
+        break;
       }
     }
+    setNotes(newNote);
   }
 
     return (
