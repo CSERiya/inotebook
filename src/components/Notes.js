@@ -16,7 +16,6 @@ const Notes = () => {
   const handleClick=(e)=>{
     editNote(note.id, note.etitle, note.edescription, note.etag)
    refClose.current.click();
-// addNote(note.title,note.description,note.tag);
 }
 
 const onChange=(e)=>{
@@ -48,16 +47,19 @@ setNotes({id:currentNote._id, etitle:currentNote.title, edescription:currentNote
             <form className='my-3'>
             <div className="mb-3">
     <label htmlFor="title" className="form-label">Title</label>
-    <input type="text" className="form-control" id="etitle" name="etitle" value={note.etitle} aria-describedby="emailHelp" onChange={onChange}/>
+    <input type="text" className="form-control" id="etitle" name="etitle" value={note.etitle} placeholder="title must contain atleast 5 characters"
+    aria-describedby="emailHelp" onChange={onChange} minLength={5} required/> 
   </div>
   <div className="mb-3">
     <label htmlFor="description" className="form-label">Description</label>
-    <input type="text" className="form-control" id="edescription" name="edescription" value={note.edescription} onChange={onChange}/>
+    <input type="text" className="form-control" id="edescription" name="edescription" placeholder="description must contain atleast 5 characters"
+    value={note.edescription} onChange={onChange} minLength={5} required/>
   </div>
 
   <div className="mb-3">
     <label htmlFor="tag" className="form-label">Tag</label>
-    <input type="text" className="form-control" id="etag" name="etag" value={note.etag} onChange={onChange}/>
+    <input type="text" className="form-control" id="etag" name="etag" value={note.etag} placeholder="tag must contain atleast 3 characters"
+    onChange={onChange}  minLength={3} required/>
   </div>
 
 </form>
@@ -65,19 +67,22 @@ setNotes({id:currentNote._id, etitle:currentNote.title, edescription:currentNote
             </div>
             <div className="modal-footer">
               <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button onClick={handleClick} type="button" className="btn btn-primary">Update Note</button>
-            </div>
+              <button disabled={note.etitle.length<5 || note.edescription.length<5 || note.etag.length<3} onClick={handleClick} 
+              type="button" className="btn btn-primary">Update Note</button>
+            </div>   
           </div>
         </div>
       </div>
       <div className="row my-3">
-        <h2>Your Notes</h2>
-        {Array.isArray(notes) &&
-          notes.map((notes) => {
+        <h2 >Your Notes</h2>
+        <div className="container mx-2">
+        {notes.length===0 && 'No notes to display'}</div>
+        {notes.map((notes) => {
             return (
               <Noteitems key={notes._id} updateNote={updateNote} notes={notes}/>
             );
           })}
+          
       </div>
     </>
   );
