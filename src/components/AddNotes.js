@@ -1,7 +1,7 @@
 import React,{useContext, useState} from 'react'
 import noteContext from '../context/notes/noteContext';
 
-const AddNotes = () => {
+const AddNotes = (props) => {
     const context=useContext(noteContext);
     const {addNote}= context;
 
@@ -11,6 +11,7 @@ const AddNotes = () => {
         e.preventDefault();
 addNote(notes.title,notes.description,notes.tag);
 setNotes({title:"",description:"",tag:""})
+props.showAlert("Note added successfully", "success");
     }
 
     const onChange=(e)=>{
@@ -22,8 +23,8 @@ setNotes({...notes,[e.target.name]:e.target.value})
      <form className='my-3'>
   <div className="mb-3">
     <label htmlFor="title" className="form-label">Title</label>
-    <input type="text" className="form-control" id="title" name="title" placeholder="title must contain atleast 5 characters" 
-    value={notes.title} aria-describedby="emailHelp" onChange={onChange} minLength={5} required/>
+    <input type="text" className="form-control" id="title" name="title" placeholder="Enter Title here" 
+    value={notes.title} aria-describedby="emailHelp" onChange={onChange} />
     
   </div>
   <div className="mb-3">
@@ -34,12 +35,12 @@ setNotes({...notes,[e.target.name]:e.target.value})
 
   <div className="mb-3">
     <label htmlFor="tag" className="form-label">Tag</label>
-    <input type="text" className="form-control" id="tag" name="tag" placeholder="tag must contain atleast 3 characters" 
+    <input type="text" className="form-control" id="tag" name="tag" placeholder="Enter tag here" 
     onChange={onChange} 
-    value={notes.tag} minLength={3} required/>
+    value={notes.tag} />
   </div>
  
-  <button disabled={notes.title.length<5 || notes.description.length<5 || notes.tag.length<3} type="submit" 
+  <button disabled={ notes.description.length<5} type="submit" 
   className="btn btn-primary" onClick={handleClick}>Add Note</button>
 </form>
     </div>
